@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 
 function Copyright(props: any) {
   return (
@@ -45,21 +46,12 @@ export default function Login({ setIsLogin }: LoginProps) {
     const password = data.get("password");
 
     try {
-      const response = await fetch("http://4.200.24.75:4000/auth/login/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.status === 201) {
-        setIsLogin(true);
-      } else if (response.status === 401) {
-        alert("Login failed. Please check your credentials.");
-      } else {
-        alert("An error occurred. Please try again later.");
-      }
+      await axios.post("http://4.200.24.75:4000/auth/login/", { email, password })
+        .then(res => {
+          setIsLogin(true)
+        }).catch(e => {
+          alert("Login failed")
+        })
     } catch (error) {
       console.error("Error during login:", error);
       alert("An error occurred. Please try again later.");
