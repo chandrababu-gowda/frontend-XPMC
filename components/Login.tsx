@@ -46,7 +46,7 @@ export default function Login({ setIsLogin }: LoginProps) {
     const password = data.get("password");
 
     try {
-      await axios.post("http://20.247.176.43:4000/auth/login/", { email, password })
+      await axios.post("http://20.198.16.29:4000/auth/login/", { email, password })
         .then(res => {
           setIsLogin(true)
         }).catch(e => {
